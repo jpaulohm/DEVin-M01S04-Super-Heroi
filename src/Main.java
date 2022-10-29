@@ -1,47 +1,31 @@
 import org.devinhouse.superherois.cli.Display;
 import org.devinhouse.superherois.exception.OpcaoInvalidaException;
 import org.devinhouse.superherois.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.devinhouse.superherois.repository.PersonagemRepository;
 
 public class Main {
     public static void main(String[] args) throws OpcaoInvalidaException {
         System.out.println("Hello world!");
 
-        List<Personagem> personagemList = new ArrayList<Personagem>();
+        PersonagemRepository personagens = new PersonagemRepository();
 
         Operacao operacao;
         do {
             operacao=Display.getOperacao();
             switch (operacao){
-                case SAIR : return;
+                case SAIR :
+                    System.out.println("\nBOA NOITE\nHORA DE DORMIR");
+                    return;
                 case LISTAR:
-                    System.out.println("==Lista de personagens==");
-                    for (Personagem personagem :personagemList) {
-                        System.out.println(personagem);
-                    }
-                    System.out.println("=======");
+                    personagens.listAll();
                     break;
                 case CADASTRAR_HEROI:
-                    personagemList.add(Display.cadastrar(TipoPersonangem.HEROI));
+                    personagens.addNewPersonagem(TipoPersonangem.HEROI);
                     break;
                 case CADASTRAR_VILAO:
-                    personagemList.add(Display.cadastrar(TipoPersonangem.VILAO));
+                    personagens.addNewPersonagem(TipoPersonangem.VILAO);
                     break;
             }
         }while (operacao != null);
-        Heroi jompa =new Heroi("Jompa","Fazer programa", "Joao");
-        Vilao series = new Vilao("series", "e quacoes diferenciais",100);
-
-
-        personagemList.add(jompa);
-        personagemList.add(series);
-
-        series.acresceTempoPrisao(2);
-
-        System.out.println(personagemList.get(1).toString());
-
-
     }
 }
